@@ -3,10 +3,10 @@ package test
 import (
 	"net/http"
 	"net/http/httptest"
-	"testing"
-	"runtime"
-	"path/filepath"
 	_ "p_accounting/routers"
+	"path/filepath"
+	"runtime"
+	"testing"
 
 	beego "github.com/beego/beego/v2/server/web"
 	. "github.com/smartystreets/goconvey/convey"
@@ -25,7 +25,7 @@ func TestBeego(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	beego.Trace("testing", "TestBeego", "Code[%d]\n%s", w.Code, w.Body.String())
+	//beego.Trace("testing", "TestBeego", "Code[%d]\n%s", w.Code, w.Body.String())
 
 	Convey("Subject: Test Station Endpoint\n", t, func() {
 	        Convey("Status Code Should Be 200", func() {
