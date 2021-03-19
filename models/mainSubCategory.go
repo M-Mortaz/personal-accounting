@@ -2,10 +2,8 @@ package models
 
 import "gorm.io/gorm"
 
-type Category struct {
+type MainSubCategory struct {
 	gorm.Model
 	Name string
-	UserID uint
-	MainCategoryID uint
 	SubCategory []SubCategory `gorm:"constant:onDelete:SET NULL;"`
 }
