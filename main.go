@@ -2,28 +2,44 @@ package main
 
 import (
 	"fmt"
-	"gorm.io/driver/sqlite"
+	"github.com/gin-gonic/gin"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"p_accounting/models"
 	_ "p_accounting/routers"
 )
 
 func main() {
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	dsn := "host=localhost user=p_acc password=p_acc dbname=p_acc"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("failed to connect database")
 	}
-
-	// Migrate the schema
-	err = db.AutoMigrate(&models.Tag{})
+	//db.AutoMigrate(&models.MainCategory{})
+	err = db.AutoMigrate(
+		&models.User{},
+		&models.Tag{},
+		&models.Source{},
+		&models.MainCategory{},
+		&models.MainSubCategory{},
+		&models.Category{},
+		&models.SubCategory{},
+		&models.Receipt{},
+	)
 	if err != nil {
 		fmt.Println(err)
 		panic("failed migration")
 	}
 
-	err = db.AutoMigrate(&models.User{}, &models.Receipt{}, &models.Tag{})
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+	fmt.Println("http://localhost:8000/")
+	err = r.Run(":8000")
 	if err != nil {
-		fmt.Println(err)
-		panic("failed migration")
+		panic("Some issue occurs ^-^")
 	}
 }
