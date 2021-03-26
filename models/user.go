@@ -17,5 +17,8 @@ type User struct {
 	SuperUser   bool
 	LastSignup  time.Time
 	Receipts    []Receipt
-
+	Source []Source
+	Tag []Tag
+	Category []Category
+	SubCategory []SubCategory
 }
